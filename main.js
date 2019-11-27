@@ -63,9 +63,29 @@ renderNav();
 
 
 function test () {
-    axios
-        .get('https://dog.ceo/api/breed//images/random/3')
-        .then()
+    $('ul').on('click', e => {
+
+        let value = e.target.textContent;
+
+        if (value === 'buhund' || value === 'bulldog' || value === 'bullterrier' || value === 'cattledog' || 
+            value === 'collie' || value === 'corgi' || value === 'dane' || value === 'deerhound' ||
+            value === 'elkhound' || value === 'frise' || value === 'greyhound' || value === 'hound' || 
+            value === 'mastiff' || value === 'mountain' || value === 'pinscher' ||
+            value === 'pointer' || value === 'poodle' || value === 'retriever' || value === 'ridgeback' || 
+            value === 'schnauzer' || value === 'setter' || value === 'sheepdog' ||
+            value === 'spaniel' || value === 'springer' || value === 'terrier' || value === 'waterdog' || 
+            value === 'wolfhound') {
+
+                console.log('good');
+            };
+
+
+        axios
+        .get(`https://dog.ceo/api/breed/${value}/images/random/3`)
+        .then(res => {
+
+        })
+    })
 }
 
 test();
