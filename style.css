@@ -27,7 +27,7 @@ ul {
     margin: 10px;
 }
 
-li {
+#li {
     margin-top: 40px;
     padding: 20px 7px;
     border-left: 3px solid rgb(255, 187, 0);
@@ -35,7 +35,7 @@ li {
     cursor: pointer;
 }
 
-li:hover {
+#li:hover {
     border-left: 3px solid rgb(255, 38, 0);
 }
 
