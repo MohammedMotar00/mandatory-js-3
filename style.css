@@ -9,25 +9,33 @@
 }
 
 h1 {
-    color: green;
+    color: rgb(0, 58, 0);
     font-size: 30px;
-    background-color: rgb(75, 51, 51);
+    background-color: rgba(102, 0, 85, 0.699);
     padding: 25px;
     text-align: center;
+    cursor: default;
 }
 
 nav {
     width: 30%;
-    height: 88.7%;
-    background-color: rgb(139, 69, 185);
+    height: 90.8%;;
+    background-color: rgb(47, 93, 136);
     overflow-y: scroll;
+}
+
+nav::-webkit-scrollbar {
+    width: 10px;
+    background-color: rgba(0, 0, 0, 0.644);
+    height: 10px;
+    border-radius: 10px;
 }
 
 ul {
     margin: 10px;
 }
 
-#li {
+.first-dog-list {
     margin-top: 40px;
     padding: 20px 7px;
     border-left: 3px solid rgb(255, 187, 0);
@@ -35,7 +43,7 @@ ul {
     cursor: pointer;
 }
 
-#li:hover {
+.first-dog-list:hover {
     border-left: 3px solid rgb(255, 38, 0);
 }
 
@@ -46,19 +54,32 @@ ul {
 .img-container {
     position: absolute;
     width: 70%;
-    height: 88.7%;
-    top: 85px;
+    height: 90.8%;
+    top: 84px;
     right: 0;
-    background-color: rgb(143, 138, 138);
+    background-color: rgba(85, 112, 170, 0.521);
+}
+
+.sort-container {
+    display: flex;
+    flex-direction: column;
+    height: 10%;
 }
 
 .sort {
-    position: absolute;
-    top: 17px;
-    left: 59px;
-    font-size: 27px;
-    border: 1px solid;
+    font-size: 40px;
+    margin: 20px 45px;
+    color: rgb(6, 86, 151);
+    background-color: rgba(0, 255, 0, 0.178);
+    box-shadow: 3px 3px 15px 1px;
+    width: 90px;
+    height: 41px;
+    cursor: default;
+    border-radius: 4px;
+}
 
+.sort::selection {
+    color: none;
 }
 
 .images {
@@ -68,12 +89,21 @@ ul {
     justify-content: center;
     align-items: center;
     width: 700px;
-    border: 1px solid;
+    height: 350px;
+    border: 4px solid rgba(102, 0, 85, 0.308);
+    border-radius: 5px;
+    background-color: rgba(123, 7, 128, 0.096);
 }
 
 img {
-    width: 200px;
+    max-width: 200px;
     margin: 15px;
+}
+
+img:hover {
+    transform: scale(1.1);
+    border: 2px solid rgba(102, 0, 85, 0.308);
+    transition: all .5s ease-in-out;
 }
 
 .button-container {
@@ -84,28 +114,69 @@ img {
     font-size: 26px;
 }
 
-#li {
+.first-dog-list {
     position: relative;
-    width: 96%;
+    width: 70%;
     height: 100px;
     font-size: 27px;
     color: white;
 }
 
 
-#li #style {
-    background-color: rgba(87, 19, 133, 0.575);
+.first-dog-list .style {
+    background-color: rgba(4, 39, 48, 0.527);
     z-index: 3;
-    transform: translateX(133px);
-    height: 100%;
-    width: 72%;
+    transform: translateX(170px);
+    height: 0%;
+    width: 70%;
     position: absolute;
     top: 0;
+    overflow-y: auto;
+    border-radius: 5px;
 }
 
-/*
-#li:hover #style {
+
+
+.first-dog-list .style::-webkit-scrollbar {
+    width: 10px;
+    border-radius: 10px;
+    background-color: rgb(17, 106, 207);
+}
+
+
+.first-dog-list:hover .style {
     height: 100%;
     transition: all .7s ease-in-out;
 }
-*/
+
+
+.newLi {
+    color: rgb(163, 157, 157);
+    font-size: 22px;
+    padding: 3px;
+}
+
+.newLi:hover {
+    color: rgb(255, 255, 255);
+}
+
+#random {
+    font-size: 30px;
+    width: 300px;
+    padding: 20px;
+    background-color: rgba(145, 6, 150, 0.24);
+    outline: none;
+    border: rgba(255, 0, 0, 0.295) solid 1px;
+    border-radius: 50px;
+}
+
+#random::selection {
+    color: none;
+}
+
+#random:hover {
+    background-color: rgba(145, 6, 150, 0.507);
+    color: rgba(255, 255, 255, 0.774);
+    border-radius: 10px;
+    transition: all .4s ease-in-out;
+}

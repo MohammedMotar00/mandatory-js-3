@@ -1,301 +1,212 @@
+const URL_ALL_BREEDS = 'https://dog.ceo/api/breeds/list/all';
 let div = document.querySelector('.images');
 
-window.onload = () => {
+
+window.onload = function() {
+    let hash = window.location.hash.substring(1);
+    //console.log(hash);
+
     axios
-        .get('https://dog.ceo/api/breeds/image/random/3')
+        .get(`https://dog.ceo/api/breed/${hash}/images/random/3`)
         .then(res => {
             res.data.message.forEach(img => {
                 let images = document.createElement('img');
+
                 images.src = img;
+
                 div.appendChild(images);
             })
         })
+};
+
+function createAllBreeds(dogs) {
+    let li = document.createElement('li');
+
+/*
+    const dogElement = document.createElement("span");
+    dogElement.textContent = dogs;
+    dogElement.classList.add("dog-name");
+    li.appendChild(dogElement);
+*/
 
 
 
+    li.classList.add('first-dog-list');
+
+
+    li.addEventListener('click', function(e) {
+        if (!e.target.className.includes("first-dog-list")) {
+            return;
+        }
+        
+        let hash = window.location.hash = dogs;
+        getDogId(hash);
+    });
+
+    //renderImg(li);
+    return li;
+}
 
 
 
-    const urlDogs = 'https://dog.ceo/api/breeds/list/all';
+function createAllSubBreeds(dog, li) {
+    let div = document.createElement('div');
+    div.className = 'style';
+
+    for (let dogs of dog) {
+
+    let li2 = document.createElement('li');
+
+    li2.className = 'newLi';
+    li2.textContent = dogs;
+
+
+    div.appendChild(li2);
+    li.appendChild(div);
+    //renderImg(null, li2);
+    //console.log(dogs)
+    li2.addEventListener('click', function(e) {
+        //let hash = window.location.hash = dogs;
+        //let liText = e.target.parentNode.parentNode.firstChild.nodeValue;
+        //let hash2 = window.location.hash = li
+
+        //window.location.hash = e.target.parentNode.parentNode.firstChild.nodeValue + '/' + dogs;
+        //window.location.hash = 
+
+
+        //let a = new String(liText);
+        //a.innerText = a;
+        //console.log(liText);
+        //getSubId(liText, hash);
+        //console.log(e.target.parentNode.parentNode.firstChild);
+        //console.log(liText);
+    })  
+
+    //div.appendChild(li2);
+    //li.appendChild(div);
+    }
+}
+
+
+
+function renderAllBreeds(dog) {
+let ul = document.querySelector('ul');
+ul.innerHTML = "";
+
+//console.log(dog)
+    for (let dogs in dog) {
+        let createdDogs = createAllBreeds(dogs);
+        //renderImg(createdDogs);
+
+        ul.appendChild(createdDogs);
+
+
+    if (dogs === 'buhund' || dogs === 'bulldog' || dogs === 'bullterrier' || 
+        dogs === 'cattledog' || dogs === 'collie' || dogs === 'corgi' || 
+        dogs === 'dane' || dogs === 'deerhound' || dogs === 'elkhound' ||
+        dogs === 'frise' || dogs === 'greyhound' || dogs === 'hound' || 
+        dogs === 'mastiff' || dogs === 'mountain' || dogs === 'pinscher' ||
+        dogs === 'pointer' || dogs === 'poodle' || dogs === 'retriever' ||
+        dogs === 'ridgeback' || dogs === 'schnauzer' || dogs === 'setter' ||
+        dogs === 'sheepdog' || dogs === 'spaniel' || dogs === 'springer' ||
+        dogs === 'terrier' || dogs === 'waterdog' || dogs === 'wolfhound') {
+
+        axios
+            .get(`https://dog.ceo/api/breed/${dogs}/list`)
+            .then(res => {
+
+                let dog = res.data.message;
+
+                createAllSubBreeds(dog, createdDogs);
+            });
+        };
+    };
+};
+
+
+
+function getAllDogs() {
+axios
+    .get(URL_ALL_BREEDS)
+    .then(res => {
+        
+        renderAllBreeds(res.data.message);
+        //renderSubBreeds(res.data.message);
+    });
+};
+
+
+
+function getDogId(id) {
+    axios
+        .get(`https://dog.ceo/api/breed/${id}/list`);
+};
+
+
+function getSubId(li, id) {
+
+axios
+    .get(`https://dog.ceo/api/breed/${li}/list`)
+    .then(res => {
+        for (let subs in res.data.message) {
+            //console.log(subs);
+        }
+    })
+
 
     axios
-        .get(urlDogs)
+        .get(`https://dog.ceo/api/breed/${li}/${id}/images/random/3`)
         .then(res => {
-            //console.log(res.data.message);
-
-            for (let dogs in res.data.message) {
-                let li = document.createElement('li');
-
-
-
-                li.id = 'li';
-
-                li.textContent = dogs;
-
-                document.querySelector('ul').appendChild(li);
-
-
-                if (li.innerHTML === 'buhund' || li.innerHTML === 'bulldog' || li.innerHTML === 'bullterrier' || 
-                    li.innerHTML === 'cattledog' || li.innerHTML === 'collie' || li.innerHTML === 'corgi' || 
-                    li.innerHTML === 'dane' || li.innerHTML === 'deerhound' || li.innerHTML === 'elkhound' ||
-                    li.innerHTML === 'frise' || li.innerHTML === 'greyhound' || li.innerHTML === 'hound' || 
-                    li.innerHTML === 'mastiff' || li.innerHTML === 'mountain' || li.innerHTML === 'pinscher' ||
-                    li.innerHTML === 'pointer' || li.innerHTML === 'poodle' || li.innerHTML === 'retriever' ||
-                    li.innerHTML === 'ridgeback' || li.innerHTML === 'schnauzer' || li.innerHTML === 'setter' ||
-                    li.innerHTML === 'sheepdog' || li.innerHTML === 'spaniel' || li.innerHTML === 'springer' ||
-                    li.innerHTML === 'terrier' || li.innerHTML === 'waterdog' || li.innerHTML === 'wolfhound') {
-
-                        let newDiv = document.createElement('div');
-                        newDiv.id = 'style';
-                        li.appendChild(newDiv);
-
-
-                        axios
-                            .get(`https://dog.ceo/api/breed/${li.textContent}/list`)
-                            .then(res => {
-
-                                for (let hund of res.data.message) {
-
-                                    let li2 = document.createElement('li');
-                                    li2.textContent = hund;
-                                    li.className = 'newLi';
-    
-                                    newDiv.appendChild(li2);
-                                }
-                            })
-
-                        //test(li, newDiv, dogs, li.textContent);
-                        //breeds(dogs, li.textContent, div)
-                        //renderNewLi(li, div);
-                    };
-            };
-        });
-}
-/*
-function test(li, div, dogs, lii) {
-    liValue = li.textContent;
-
-    //for (let i = 0; i < liValue.length; i++)
-
-
-
-    if (liValue === 'buhund') {
-        axios
-            .get(`https://dog.ceo/api/breed/${liValue}/list`)
-            .then(res => {
-                let result = res.data.message;
-                let ul = document.createElement('ul'),
-                    li2 = document.createElement('li');
-
-                li2.textContent = result;
-                li2.className = 'newLi'
-
-                ul.appendChild(li2);
-                div.appendChild(ul);
-            })
-    }
-
-
-
-
-/*
-    if (liValue === 'buhund' && liValue === 'bulldog' && liValue === 'bullterrier' && 
-        liValue === 'cattledog' && liValue === 'collie' && liValue === 'corgi' && 
-        liValue === 'dane' && liValue === 'deerhound' && liValue === 'elkhound' &&
-        liValue === 'frise' && liValue === 'greyhound' && liValue === 'hound' && 
-        liValue === 'mastiff' && liValue === 'mountain' && liValue === 'pinscher' &&
-        liValue === 'pointer' && liValue === 'poodle' && liValue === 'retriever' &&
-        liValue === 'ridgeback' && liValue === 'schnauzer' && liValue === 'setter' &&
-        liValue === 'sheepdog' && liValue === 'spaniel' && liValue === 'springer' &&
-        liValue === 'terrier' && liValue === 'waterdog' && liValue === 'wolfhound') {
-            console.log('good');
-            axios
-                .get(`https://dog.ceo/api/breed/${liValue}/list`)
-                .then(res => {
-                    let result = res.data.message;
-                        let ul = document.createElement('ul'),
-                            li2 = document.createElement('li');
-
-                        li2.textContent = result;
-                        ul.appendChild(li2);
-
-                        //console.log(div);
-                })
-        }
+            //console.log(res);
+        })
 
 }
-*/
 
 
-function breeds(dogs, li, div) {
-    let newList = li,
-        newDiv = div;
-    //console.log(newList)
-        //console.log(res.data.message);
-
-        //console.log(document.querySelector('ul').childNodes);
-/*
-        let ulLi = document.querySelector('ul').childNodes;
-        console.log(ulLi[0]);
-
-        for (let i of ulLi) {
-            console.log(i);
-        }
-*/
-
-
-
-
-
-            if (newList === 'buhund' || newList === 'bulldog' || newList === 'bullterrier' || 
-            newList === 'cattledog' || newList === 'collie' || newList === 'corgi' || 
-            newList === 'dane' || newList === 'deerhound' || newList === 'elkhound' ||
-            newList === 'frise' || newList === 'greyhound' || newList === 'hound' || 
-            newList === 'mastiff' || newList === 'mountain' || newList === 'pinscher' ||
-            newList === 'pointer' || newList === 'poodle' || newList === 'retriever' ||
-            newList === 'ridgeback' || newList === 'schnauzer' || newList === 'setter' ||
-            newList === 'sheepdog' || newList === 'spaniel' || newList === 'springer' ||
-            newList === 'terrier' || newList === 'waterdog' || newList === 'wolfhound') {
-
-                
-
-                axios
-                    .get(`https://dog.ceo/api/breed/${newList}/list`)
-                    .then(res => {
-                        let result = res.data.message;
-                        //console.log(result);
-                        
-                        
-                    })
-
-
-                /*
-                let ul = document.createElement('ul'),
-                    li = document.createElement('li');
-
-                let url = `https://dog.ceo/api/breed/${newList}/list`;
-                axios
-                .get(url)
-                .then(res => {
-                    //console.log(res);
-                    //if (res.config.url === res.data.message) console.log('good');
-
-                })
-
-
-                //li.textContent = i;
-                //ul.appendChild(li);
-
-                //newDiv.appendChild(ul);
-*/
-            }
-
-
-
-/*
-    if (newList === 'buhund' || newList === 'bulldog' || newList === 'bullterrier' || 
-        newList === 'cattledog' || newList === 'collie' || newList === 'corgi' || 
-        newList === 'dane' || newList === 'deerhound' || newList === 'elkhound' ||
-        newList === 'frise' || newList === 'greyhound' || newList === 'hound' || 
-        newList === 'mastiff' || newList === 'mountain' || newList === 'pinscher' ||
-        newList === 'pointer' || newList === 'poodle' || newList === 'retriever' ||
-        newList === 'ridgeback' || newList === 'schnauzer' || newList === 'setter' ||
-        newList === 'sheepdog' || newList === 'spaniel' || newList === 'springer' ||
-        newList === 'terrier' || newList === 'waterdog' || newList === 'wolfhound') {
-
-            axios
-                .get(`https://dog.ceo/api/breed/${newList}/list`)
-                .then(res => {
-                    let ul = document.createElement('ul'),
-                        li = document.createElement('li');
-
-                    li.className = 'newLi';
-                    li.textContent = res.data.message;
-
-                    ul.appendChild(li);
-                    div.appendChild(ul);
-                })
-        };
-*/
-}
 
 
 function renderImg() {
 
-    $('ul').on('click', e => {
+    document.querySelector('ul').addEventListener('click', e => {
+        const el = e.target.querySelector(".first-dog-list");
+        //const value = el.textContent;
+        //console.log(el);
 
-        let value = e.target.textContent;
-
+/*
+        if (el === null) {
+            return;
+        }
+*/
 
         axios
-            .get(`https://dog.ceo/api/breed/${value}/images/random/3`)
+            .get(`https://dog.ceo/api/breed/${el}/images/random/3`)
             .then(res => {
                 div.innerHTML = "";
+
                 res.data.message.forEach(links => {
                     let img = document.createElement('img');
 
                     img.src = links;
 
                     div.appendChild(img);
+
                 });
             });
+    });
 
-    })
+
 };
 
 
-
-
-/*
-function test(li, div, dogs, lii) {
-    liValue = li.textContent;
-
-    //for (let i = 0; i < liValue.length; i++)
-
-
-
-    if (liValue === 'buhund') {
-        axios
-            .get(`https://dog.ceo/api/breed/${liValue}/list`)
-            .then(res => {
-                let result = res.data.message;
-                //console.log(result);
-
-
-                for (let m of result) console.log(m);
-
-
-
-                let ul = document.createElement('ul'),
-                    li2 = document.createElement('li');
-
-                li2.textContent = result;
-                li2.className = 'newLi'
-
-                ul.appendChild(li2);
-                div.appendChild(ul);
-            })
-
-    } else if (liValue === 'bulldog') {
-        axios
-            .get(`https://dog.ceo/api/breed/${liValue}/list`)
-            .then(res => {
-                let result = res.data.message;
-                let ul = document.createElement('ul'),
-                    li2 = document.createElement('li');
-
-                li2.textContent = result;
-                li2.className = 'newLi'
-
-                ul.appendChild(li2);
-                div.appendChild(ul);
-            })
-    }
-}
-
-*/
-
+//getSubId();
+let dogsID = window.location.hash;
+dogsID = dogsID.substring(1);
+getDogId(dogsID);
 
 renderImg();
-//renderNav();
-//breeds();
+getAllDogs();
+
+
+
+// Jag vill kunna få ut window.location.hash för alla sub-breeds som ligger i createAllSubBreeds()
+// Jag vill kunna få bilderna för alla sub-breeds
