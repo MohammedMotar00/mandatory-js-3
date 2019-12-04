@@ -1,28 +1,9 @@
 const URL_ALL_BREEDS = 'https://dog.ceo/api/breeds/list/all';
 let divImg = document.querySelector('.images');
 
-/*
-window.onload = function() {
-    let hash = window.location.hash.substring(1);
-
-    axios
-        .get(`https://dog.ceo/api/breed/${hash}/images/random/3`)
-        .then(res => {
-            res.data.message.forEach(img => {
-                let images = document.createElement('img');
-
-                images.src = img;
-
-                divImg.appendChild(images);
-            });
-        });
-};
-*/
 
 
 window.onload = function() {
-    //let hash = window.location.hash.substring(1);
-
     if (window.location.hash.includes('-')) {
         let myHash = window.location.hash.substring(1);
 
@@ -40,7 +21,8 @@ window.onload = function() {
                     divImg.appendChild(images);
                 });
             });
-    } else {
+
+    } else if (window.location.hash) {
         let hash = window.location.hash.substring(1);
 
         axios
@@ -54,8 +36,81 @@ window.onload = function() {
                     divImg.appendChild(images);
                 });
             });
+
+    } else {
+        axios
+            .get(`https://dog.ceo/api/breeds/image/random/3`)
+            .then(res => {
+                res.data.message.forEach(img => {
+                    let images = document.createElement('img');
+
+                    images.src = img;
+
+                    divImg.appendChild(images);
+                });
+            });
     };
 };
+
+
+
+function refreshButton() {
+const btn = document.getElementById('random');
+
+btn.addEventListener('click', function(e) {
+    divImg.innerHTML = "";
+    if (window.location.hash.includes('-')) {
+        let myHash = window.location.hash.substring(1);
+
+        let hash0 = myHash.split("-")[0];
+        let hash1 = myHash.split("-")[1];
+
+        axios
+            .get(`https://dog.ceo/api/breed/${hash0}/${hash1}/images/random/3`)
+            .then(res => {
+                //divImg.innerHTML = "";
+                res.data.message.forEach(img => {
+                    let images = document.createElement('img');
+
+                    images.src = img;
+
+                    divImg.appendChild(images);
+                });
+            });
+
+    } else if (window.location.hash) {
+        let hash = window.location.hash.substring(1);
+
+        axios
+            .get(`https://dog.ceo/api/breed/${hash}/images/random/3`)
+            .then(res => {
+                //divImg.innerHTML = "";
+                res.data.message.forEach(img => {
+                    let images = document.createElement('img');
+
+                    images.src = img;
+
+                    divImg.appendChild(images);
+                });
+            });
+
+    } else {
+        axios
+            .get(`https://dog.ceo/api/breeds/image/random/3`)
+            .then(res => {
+                //divImg.innerHTML = "";
+                res.data.message.forEach(img => {
+                    let images = document.createElement('img');
+
+                    images.src = img;
+
+                    divImg.appendChild(images);
+                });
+            });
+    };
+});
+};
+
 
 
 
@@ -227,5 +282,6 @@ li.addEventListener('click', function(e) {
 };
 
 
+refreshButton();
 getAllDogs();
 renderAllBreeds();
