@@ -1,10 +1,9 @@
 const URL_ALL_BREEDS = 'https://dog.ceo/api/breeds/list/all';
-let div = document.querySelector('.images');
+let divImg = document.querySelector('.images');
 
-
+/*
 window.onload = function() {
     let hash = window.location.hash.substring(1);
-    //console.log(hash);
 
     axios
         .get(`https://dog.ceo/api/breed/${hash}/images/random/3`)
@@ -14,86 +13,102 @@ window.onload = function() {
 
                 images.src = img;
 
-                div.appendChild(images);
-            })
-        })
+                divImg.appendChild(images);
+            });
+        });
 };
-
-function createAllBreeds(dogs) {
-    let li = document.createElement('li');
-
-/*
-    const dogElement = document.createElement("span");
-    dogElement.textContent = dogs;
-    dogElement.classList.add("dog-name");
-    li.appendChild(dogElement);
 */
 
 
+window.onload = function() {
+    //let hash = window.location.hash.substring(1);
 
-    li.classList.add('first-dog-list');
+    if (window.location.hash.includes('-')) {
+        let myHash = window.location.hash.substring(1);
+
+        let hash0 = myHash.split("-")[0];
+        let hash1 = myHash.split("-")[1];
+
+        axios
+            .get(`https://dog.ceo/api/breed/${hash0}/${hash1}/images/random/3`)
+            .then(res => {
+                res.data.message.forEach(img => {
+                    let images = document.createElement('img');
+
+                    images.src = img;
+
+                    divImg.appendChild(images);
+                });
+            });
+    } else {
+        let hash = window.location.hash.substring(1);
+
+        axios
+            .get(`https://dog.ceo/api/breed/${hash}/images/random/3`)
+            .then(res => {
+                res.data.message.forEach(img => {
+                    let images = document.createElement('img');
+
+                    images.src = img;
+
+                    divImg.appendChild(images);
+                });
+            });
+    };
+};
 
 
-    li.addEventListener('click', function(e) {
-        if (!e.target.className.includes("first-dog-list")) {
-            return;
-        }
-        
+
+function createAllBreeds(dogs) {
+let dogDiv = document.createElement('div'),
+    li = document.createElement('li');
+
+dogDiv.classList.add('div-container');
+li.classList.add('first-dog-list');
+li.innerHTML = dogs;
+
+dogDiv.appendChild(li);
+
+renderImg(li);
+
+li.addEventListener('click', function() {
+    let hash = window.location.hash = dogs;
+    getDogId(hash);
+});
+
+return dogDiv;
+}
+
+
+
+function createAllSubBreeds(dog, div, id) {
+let subDiv = document.createElement('div');
+//console.log(id);
+for (let dogs of dog) {
+
+    let li = document.createElement('li');
+
+    li.classList.add('newLi');
+    li.innerHTML = dogs;
+
+    subDiv.appendChild(li);
+    div.appendChild(subDiv);
+
+    renderSubImg(li);
+
+    li.addEventListener('click', function() {
         let hash = window.location.hash = dogs;
-        getDogId(hash);
+
     });
-
-    //renderImg(li);
-    return li;
-}
-
-
-
-function createAllSubBreeds(dog, li) {
-    let div = document.createElement('div');
-    div.className = 'style';
-
-    for (let dogs of dog) {
-
-    let li2 = document.createElement('li');
-
-    li2.className = 'newLi';
-    li2.textContent = dogs;
-
-
-    div.appendChild(li2);
-    li.appendChild(div);
-    //renderImg(null, li2);
-    //console.log(dogs)
-    li2.addEventListener('click', function(e) {
-        //let hash = window.location.hash = dogs;
-        //let liText = e.target.parentNode.parentNode.firstChild.nodeValue;
-        //let hash2 = window.location.hash = li
-
-        //window.location.hash = e.target.parentNode.parentNode.firstChild.nodeValue + '/' + dogs;
-        //window.location.hash = 
-
-
-        //let a = new String(liText);
-        //a.innerText = a;
-        //console.log(liText);
-        //getSubId(liText, hash);
-        //console.log(e.target.parentNode.parentNode.firstChild);
-        //console.log(liText);
-    })  
-
-    //div.appendChild(li2);
-    //li.appendChild(div);
-    }
-}
+};
+};
 
 
 
 function renderAllBreeds(dog) {
-let ul = document.querySelector('ul');
-ul.innerHTML = "";
+    let ul = document.querySelector('ul');
+    ul.innerHTML = "";
 
-//console.log(dog)
     for (let dogs in dog) {
         let createdDogs = createAllBreeds(dogs);
         //renderImg(createdDogs);
@@ -126,13 +141,11 @@ ul.innerHTML = "";
 
 
 function getAllDogs() {
-axios
-    .get(URL_ALL_BREEDS)
-    .then(res => {
-        
-        renderAllBreeds(res.data.message);
-        //renderSubBreeds(res.data.message);
-    });
+    axios
+        .get(URL_ALL_BREEDS)
+        .then(res => {
+            renderAllBreeds(res.data.message);
+        });
 };
 
 
@@ -143,70 +156,76 @@ function getDogId(id) {
 };
 
 
-function getSubId(li, id) {
-
-axios
-    .get(`https://dog.ceo/api/breed/${li}/list`)
-    .then(res => {
-        for (let subs in res.data.message) {
-            //console.log(subs);
-        }
-    })
-
-
+function getDogSubId(value1, value2) {
+    //console.log(value1);
+    //console.log(value2);
     axios
-        .get(`https://dog.ceo/api/breed/${li}/${id}/images/random/3`)
+        .get(`https://dog.ceo/api/breed/${value1}/list`)
         .then(res => {
-            //console.log(res);
-        })
-
-}
-
-
-
-
-function renderImg() {
-
-    document.querySelector('ul').addEventListener('click', e => {
-        const el = e.target.querySelector(".first-dog-list");
-        //const value = el.textContent;
-        //console.log(el);
-
+            //value2 = res;
+            for (let i of res.data.message) {
+                if (i === value2) {
+                    value2 = i;
+                    window.location.hash = `${value1}-${value2}`;
+                }
+            }
 /*
-        if (el === null) {
-            return;
-        }
+            value2 = res.data.message;
+            window.location.hash = `${value1}-${value2}`;
 */
-
-        axios
-            .get(`https://dog.ceo/api/breed/${el}/images/random/3`)
-            .then(res => {
-                div.innerHTML = "";
-
-                res.data.message.forEach(links => {
-                    let img = document.createElement('img');
-
-                    img.src = links;
-
-                    div.appendChild(img);
-
-                });
-            });
-    });
-
-
+        })
 };
 
 
-//getSubId();
-let dogsID = window.location.hash;
-dogsID = dogsID.substring(1);
-getDogId(dogsID);
 
-renderImg();
+function renderImg(dogLi) {
+let li = dogLi;
+
+li.addEventListener('click', function(e) {
+    let value = e.target.textContent;
+
+    axios
+        .get(`https://dog.ceo/api/breed/${value}/images/random/3`)
+        .then(res => {
+            divImg.innerHTML = "";
+
+            res.data.message.forEach(links => {
+                let img = document.createElement('img');
+
+                img.src = links;
+
+                divImg.appendChild(img);
+            });
+        });
+});
+};
+
+//document.querySelector('ul').parentElement
+
+function renderSubImg(subLi) {
+let li = subLi;
+
+li.addEventListener('click', function(e) {
+    let value1 = e.target.parentElement.parentElement.firstChild.textContent;
+    let value2 = e.target.textContent;
+
+    getDogSubId(value1, value2);
+    axios
+        .get(`https://dog.ceo/api/breed/${value1}/${value2}/images/random/3`)
+        .then(res => {
+            divImg.innerHTML = "";
+
+            res.data.message.forEach(links => {
+                let img = document.createElement('img');
+
+                img.src = links;
+
+                divImg.appendChild(img);
+            });
+        });
+});
+};
+
+
 getAllDogs();
-
-
-
-// Jag vill kunna få ut window.location.hash för alla sub-breeds som ligger i createAllSubBreeds()
-// Jag vill kunna få bilderna för alla sub-breeds
+renderAllBreeds();

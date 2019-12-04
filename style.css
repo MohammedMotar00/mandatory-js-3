@@ -127,7 +127,7 @@ img:hover {
     background-color: rgba(4, 39, 48, 0.527);
     z-index: 3;
     transform: translateX(170px);
-    height: 0%;
+    height: 80%;
     width: 70%;
     position: absolute;
     top: 0;
@@ -143,11 +143,12 @@ img:hover {
     background-color: rgb(17, 106, 207);
 }
 
-
+/*
 .first-dog-list:hover .style {
     height: 100%;
     transition: all .7s ease-in-out;
 }
+*/
 
 
 .newLi {
