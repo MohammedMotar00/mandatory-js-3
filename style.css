@@ -4,24 +4,24 @@
     box-sizing: border-box;
 }
 
-.container {
-    height: 100vh;
-}
-
 h1 {
     color: rgb(0, 58, 0);
     font-size: 30px;
     background-color: rgba(102, 0, 85, 0.699);
     padding: 25px;
     text-align: center;
-    cursor: default;
+}
+
+
+.container {
+    height: 90.8vh;
+    display: flex;
 }
 
 nav {
-    width: 30%;
-    height: 90.8%;;
     background-color: rgb(47, 93, 136);
     overflow-y: scroll;
+    flex: 2;
 }
 
 nav::-webkit-scrollbar {
@@ -35,70 +35,70 @@ ul {
     margin: 10px;
 }
 
-.first-dog-list {
-    margin-top: 40px;
-    padding: 20px 7px;
-    border-left: 3px solid rgb(255, 187, 0);
-    list-style: none;
-    cursor: pointer;
-}
-
-.first-dog-list:hover {
-    border-left: 3px solid rgb(255, 38, 0);
-}
-
-
-
-
-
-.img-container {
-    position: absolute;
-    width: 70%;
-    height: 90.8%;
-    top: 84px;
-    right: 0;
+.right-side {
+    flex: 5;
     background-color: rgba(85, 112, 170, 0.521);
 }
 
-.sort-container {
+
+.dogType-container {
+    margin: 20px;
+}
+
+.dogType {
+    padding: 10px;
+    font-size: 40px;
+    color: rgb(6, 86, 151);
+    background-color: rgba(0, 255, 0, 0.178);
+    box-shadow: 3px 3px 15px 1px;
+    border-radius: 20px;
+}
+
+
+
+
+
+
+/* //////////////////////////////////////////////////////// */
+
+/* bilderna */
+.image-container {
     display: flex;
     flex-direction: column;
     height: 10%;
 }
 
-.sort {
-    font-size: 40px;
-    margin: 20px 45px;
-    color: rgb(6, 86, 151);
-    background-color: rgba(0, 255, 0, 0.178);
-    box-shadow: 3px 3px 15px 1px;
-    width: 90px;
-    height: 41px;
-    cursor: default;
-    border-radius: 4px;
-}
-
-.sort::selection {
-    color: none;
-}
 
 .images {
+    position: relative;
     margin: 30px auto;
     display: flex;
     flex-flow: row wrap;
     justify-content: center;
     align-items: center;
-    width: 700px;
-    height: 350px;
+
+    min-width: 700px;
+    max-width: 700px;
+
+    min-height: 350px;
+    max-height: 350px;
+
     border: 4px solid rgba(102, 0, 85, 0.308);
     border-radius: 5px;
     background-color: rgba(123, 7, 128, 0.096);
 }
 
 img {
+    min-width: 200px;
     max-width: 200px;
+
+    min-height: 200px;
+    max-height: 200px;
+
+    border-radius: 20px;
     margin: 15px;
 }
+
 
 img:hover {
     transform: scale(1.1);
@@ -106,62 +106,77 @@ img:hover {
     transition: all .5s ease-in-out;
 }
 
-.button-container {
+
+
+
+
+
+/* //////////////////////////////////////////////////////// */
+
+/* dog List */
+
+.breed-container {
     display: flex;
-    justify-content: center;
     align-items: center;
-    padding: 10px;
-    font-size: 26px;
+    margin-top: 40px;
+    padding: 20px 7px;
+    border-left: 3px solid rgb(255, 187, 0);
+    list-style: none;
+    cursor: pointer;
+    height: 100px;
 }
 
-.first-dog-list {
-    position: relative;
-    width: 70%;
-    height: 100px;
+.breed-container:hover {
+    border-left: 3px solid rgb(255, 38, 0);
+}
+
+.breed-dogs {
+    align-items: center;
+    width: 50%;
     font-size: 27px;
     color: white;
 }
 
 
-.first-dog-list .style {
+.subBreedDiv {
     background-color: rgba(4, 39, 48, 0.527);
-    z-index: 3;
-    transform: translateX(170px);
-    height: 80%;
+    height: 0;
     width: 70%;
-    position: absolute;
-    top: 0;
     overflow-y: auto;
     border-radius: 5px;
 }
 
-
-
-.first-dog-list .style::-webkit-scrollbar {
-    width: 10px;
-    border-radius: 10px;
-    background-color: rgb(17, 106, 207);
+.sub-breed-li {
+    font-size: 25px;
+    color: rgb(148, 52, 52);
 }
 
-/*
-.first-dog-list:hover .style {
-    height: 100%;
+.sub-breed-li:hover {
+    color: rgb(255, 0, 0)
+}
+
+
+.breed-container:hover .subBreedDiv {
+    height: 100px;
     transition: all .7s ease-in-out;
 }
-*/
 
 
-.newLi {
-    color: rgb(163, 157, 157);
-    font-size: 22px;
-    padding: 3px;
+
+
+
+/* //////////////////////////////////////////////////////// */
+
+/* button */
+
+.button-container {
+    margin-top: 320px;
+    text-align: center;
+    padding: 10px;
+    font-size: 26px;
 }
 
-.newLi:hover {
-    color: rgb(255, 255, 255);
-}
-
-#random {
+#random-dog {
     font-size: 30px;
     width: 300px;
     padding: 20px;
@@ -171,13 +186,17 @@ img:hover {
     border-radius: 50px;
 }
 
-#random::selection {
-    color: none;
-}
+#random-dog:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 1rem 2rem rgba(0,0,0,.2);
 
-#random:hover {
     background-color: rgba(145, 6, 150, 0.507);
     color: rgba(255, 255, 255, 0.774);
     border-radius: 10px;
-    transition: all .4s ease-in-out;
+    transition: all .3s ease-in-out;
+}
+
+#random-dog:active {
+    transform: translateY(-1px);
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.5);
 }
